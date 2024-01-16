@@ -1,0 +1,53 @@
+.car-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+/* Custome */
+
+.icon {
+  font-size: 20px;
+}
+
+@media (min-width: 768px) {
+  .cart {
+    position: fixed;
+    width: 32%;
+    top: 60px;
+    height: 100%;
+  }
+
+  .list-cart {
+    max-height: 42%;
+    overflow: auto;
+  }
+
+  .img-cart {
+    width: 85px;
+  }
+
+  .cart-bottom {
+    position: fixed;
+    bottom: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-cart {
+    width: 70px;
+  }
+
+  .list-cart {
+    overflow-x: auto;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ------------------- End Custome --------------- */
