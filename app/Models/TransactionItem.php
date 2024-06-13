@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\belong;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ransactionItem extends Model
+class TransactionItem extends Model
 {
     use HasFactory;
     
