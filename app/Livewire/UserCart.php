@@ -2,12 +2,12 @@
 
 namespace App\Livewire;
 
-use App\Models\cart;
-use App\Models\product;
+use App\Models\Cart;
+use App\Models\Product;
 use Livewire\Component;
-use App\Models\transaction;
+use App\Models\Transaction;
 use Livewire\Attributes\On;
-use App\Models\transactionItem;
+use App\Models\TransactionItem;
 use Livewire\Attributes\Validate;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +29,7 @@ class UserCart extends Component
 
     public function pay($id)
     {
-        $transaction = transaction::where('id', $id)->first();
+        $transaction = Transaction::where('id', $id)->first();
 
         if ($transaction->status !== 'Pending') {
             noty()->timeout(1000)->progressBar(false)->addError('Product already paid.');
@@ -45,7 +45,7 @@ class UserCart extends Component
     {
         $this->validate();
 
-        $cart = cart::where('user_id', Auth::user()->id)
+        $cart = Cart::where('user_id', Auth::user()->id)
         ->whereRelation('product', 'deleted_at', null)->get();
 
         foreach ($cart as $value) {
@@ -79,10 +79,10 @@ class UserCart extends Component
                 $item->save();
             }
 
-            cart::where('user_id', Auth::user()->id)->delete();
+            Cart::where('user_id', Auth::user()->id)->delete();
 
-            $this->current_transaction = transaction::where('id', $transaction->id)->first();
-            $this->item = transactionItem::with('product')->where('transaction_id', $transaction->id)->get();
+            $this->current_transaction = Transaction::where('id', $transaction->id)->first();
+            $this->item = TransactionItem::with('product')->where('transaction_id', $transaction->id)->get();
             $this->status = $transaction->status;
 
 
@@ -101,15 +101,15 @@ class UserCart extends Component
 
     public function delete($id)
     {
-        $cart = cart::where('id', $id)->first();
+        $cart = Cart::where('id', $id)->first();
         $cart->delete();
         noty()->timeout(1000)->progressBar(false)->addError('Product deleted.');
     }
 
     public function plus($id)
     {
-        $cart = cart::where('id', $id)->first();
-        $product = product::where('id', $cart->product_id)->first();
+        $cart = Cart::where('id', $id)->first();
+        $product = Product::where('id', $cart->product_id)->first();
 
         if ($cart->quantity != $product->quantity) {
             $cart->quantity = $cart->quantity + 1;
@@ -123,7 +123,7 @@ class UserCart extends Component
 
     public function minus($id)
     {
-        $cart = cart::where('id', $id)->first();
+        $cart = Cart::where('id', $id)->first();
         if ($cart->quantity > 1) {
             $cart->quantity = $cart->quantity - 1;
             $cart->save();
@@ -138,7 +138,7 @@ class UserCart extends Component
     public function render()
     {
 
-        $cart = cart::where('user_id', Auth::user()->id)
+        $cart = Cart::where('user_id', Auth::user()->id)
         ->whereRelation('product', 'deleted_at', null)->get();
 
         foreach ($cart as $value) {

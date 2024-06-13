@@ -3,9 +3,9 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\transaction;
+use App\Models\Transaction;
 use Livewire\Attributes\On;
-use App\Models\transactionItem;
+use App\Models\TransactionItem;
 use Illuminate\Support\Facades\Auth;
 
 class UserTransaction extends Component
@@ -25,7 +25,7 @@ class UserTransaction extends Component
 
     public function pay($id)
     {
-        $transaction = transaction::where('id', $id)->first();
+        $transaction = Transaction::where('id', $id)->first();
 
         if ($transaction->status !== 'Pending') {
             noty()->timeout(1000)->progressBar(false)->addError('Product already paid.');
@@ -39,8 +39,8 @@ class UserTransaction extends Component
 
     public function show($id)
     {
-        $this->item = transactionItem::with('product')->where('transaction_id', $id)->get();
-        $price = transaction::where('id', $id)->first(['total_price', 'status']);
+        $this->item = TransactionItem::with('product')->where('transaction_id', $id)->get();
+        $price = Transaction::where('id', $id)->first(['total_price', 'status']);
         $this->price = (string)$price->total_price;
         $this->status = (string)$price->status;
 
@@ -49,7 +49,7 @@ class UserTransaction extends Component
 
     public function render()
     {
-        $transaction = transaction::where('user_id', Auth::user()->id)->where('status', $this->status_query)->latest()->get();
+        $transaction = Transaction::where('user_id', Auth::user()->id)->where('status', $this->status_query)->latest()->get();
         return view('livewire.user-transaction', [
             'transaction' => $transaction,
             'product' => $this->item,

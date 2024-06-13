@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\product;
+use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,7 +16,7 @@ class ProductSoldout extends Component
 
     public function delete($id)
     {
-        $product = product::where('id', $id)->first();
+        $product = Product::where('id', $id)->first();
         $product->Delete();
         noty()->timeout(1000)->progressBar(false)->addError('Product archive.');
     }
@@ -28,7 +28,7 @@ class ProductSoldout extends Component
 
     public function detail($id)
     {
-        $this->productShow = product::with('category')->where('id', $id)->first();
+        $this->productShow = Product::with('category')->where('id', $id)->first();
         $this->name = $this->productShow->name;
         $this->price = $this->productShow->price;
         $this->quantity = $this->productShow->quantity;
@@ -37,7 +37,7 @@ class ProductSoldout extends Component
 
     public function render()
     {
-        $products = product::where('quantity', '0')->where('name', 'like', '%'.$this->search.'%')->latest()->paginate($this->pag);
+        $products = Product::where('quantity', '0')->where('name', 'like', '%'.$this->search.'%')->latest()->paginate($this->pag);
         return view('livewire.product-soldout', ['product' => $products, 'show' => $this->productShow]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Models\cart;
-use App\Models\product;
+use App\Models\Cart;
+use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +17,9 @@ class UserProduct extends Component
     
     public function add($id)
     {
-        $product = product::where('id', $id)->first();
+        $product = Product::where('id', $id)->first();
 
-        $cart_exist = cart::where('product_id', $product->id)->first();
+        $cart_exist = Cart::where('product_id', $product->id)->first();
 
         if ($cart_exist !== null && $cart_exist->quantity != $product->quantity) {
             $cart_exist->quantity = $cart_exist->quantity + 1;
@@ -46,7 +46,7 @@ class UserProduct extends Component
 
     public function render()
     {
-        $product = product::where('name', 'like', '%'.$this->search.'%')->where('quantity', '>', '0')->latest()->paginate(18);
+        $product = Product::where('name', 'like', '%'.$this->search.'%')->where('quantity', '>', '0')->latest()->paginate(18);
         return view('livewire.user-product', ['product' => $product]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\product;
+use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -16,14 +16,14 @@ class ProductArchive extends Component
 
     public function delete($id)
     {
-        $product = product::onlyTrashed()->where('id', $id)->first();
+        $product = Product::onlyTrashed()->where('id', $id)->first();
         $product->forceDelete();
         noty()->timeout(1000)->progressBar(false)->addError('Product deleted.');
     }
     
     public function restore($id)
     {
-        $product = product::onlyTrashed()->where('id', $id)->first();
+        $product = Product::onlyTrashed()->where('id', $id)->first();
         $product->restore();
         noty()->timeout(1000)->progressBar(false)->addSuccess('Product Un-Archive.');
     }
@@ -35,7 +35,7 @@ class ProductArchive extends Component
 
     public function detail($id)
     {
-        $this->productShow = product::onlyTrashed()->where('id', $id)->first();
+        $this->productShow = Product::onlyTrashed()->where('id', $id)->first();
         $this->name = $this->productShow->name;
         $this->price = $this->productShow->price;
         $this->quantity = $this->productShow->quantity;
@@ -44,7 +44,7 @@ class ProductArchive extends Component
 
     public function render()
     {
-        $products = product::onlyTrashed()->where('name', 'like', '%'.$this->search.'%')->latest()->paginate($this->pag);
+        $products = Product::onlyTrashed()->where('name', 'like', '%'.$this->search.'%')->latest()->paginate($this->pag);
         return view('livewire.product-archive', ['product' => $products, 'show' => $this->productShow]);
     }
 }

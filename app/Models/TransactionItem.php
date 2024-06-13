@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Relations\belong;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class transactionItem extends Model
+class ransactionItem extends Model
 {
     use HasFactory;
     
     public function product(): BelongsTo
     {
-        return $this->belongsTo(product::class, 'product_id', 'id');
+        return $this->belongsTo(Product::class, 'product_id', 'id');
     }
 }

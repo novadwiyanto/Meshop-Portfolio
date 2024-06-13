@@ -2,9 +2,9 @@
 
 namespace App\Livewire;
 
-use App\Models\product;
+use App\Models\Product;
 use Livewire\Component;
-use App\Models\category;
+use App\Models\Category;
 use Livewire\Attributes\On;
 use Illuminate\Http\Request;
 use Livewire\Attributes\Layout;
@@ -21,7 +21,7 @@ class ProductUpdate extends Component
     public function mount(Request $request)
     {
         $this->id = $request->route()->parameter('id');
-        $this->product = product::withTrashed()->with('category')->findOrFail($this->id);
+        $this->product = Product::withTrashed()->with('category')->findOrFail($this->id);
         $this->form->name = $this->product->name;
         $this->form->price = $this->product->price;
         $this->form->quantity = $this->product->quantity;
@@ -41,7 +41,7 @@ class ProductUpdate extends Component
     #[Layout('admin-productUpdate')] 
     public function render()
     {
-        $category = category::all();
+        $category = Category::all();
         return view('livewire.product-update', ['category' => $category]);
     }
 }

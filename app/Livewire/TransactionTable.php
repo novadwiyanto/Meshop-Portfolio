@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\transaction;
+use App\Models\Transaction;
 use Livewire\Attributes\On;
 use Livewire\WithPagination;
 
@@ -37,7 +37,7 @@ class TransactionTable extends Component
 
     public function render()
     {
-        $transaction = transaction::where('name', 'like', '%' . $this->search . '%')
+        $transaction = Transaction::where('name', 'like', '%' . $this->search . '%')
             ->where('status', 'like', '%' . $this->status_query . '%')
             ->latest()->paginate($this->pag);
         return view('livewire.transaction-table', ['transaction' => $transaction]);

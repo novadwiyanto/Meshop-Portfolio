@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\category;
+use App\Models\Category;
 use Livewire\Attributes\Validate;
 
 class CategoryTable extends Component
@@ -15,20 +15,20 @@ class CategoryTable extends Component
     {
         $validated = $this->validate();
  
-        category::create($validated);
+        Category::create($validated);
         noty()->timeout(1000)->progressBar(false)->addSuccess('Category successfuly created.');
     }
 
     public function delete($id)
     {
-        $category = category::where('id', $id)->first();
+        $category = Category::where('id', $id)->first();
         $category->delete();
         noty()->timeout(1000)->progressBar(false)->addError('Category successfuly deleted.');
     }
 
     public function render()
     {
-        $category = category::all();
+        $category = Category::all();
         return view('livewire.category-table', ['category' => $category]);
 
     }

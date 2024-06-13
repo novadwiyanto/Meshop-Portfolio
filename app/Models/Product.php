@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class product extends Model
+class Product extends Model
 {
     use HasFactory;
     use SoftDeletes;
@@ -27,6 +27,6 @@ class product extends Model
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(category::class, 'category_id', 'id');
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 }

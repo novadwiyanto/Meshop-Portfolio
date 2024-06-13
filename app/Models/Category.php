@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class category extends Model
+class Category extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,6 @@ class category extends Model
      */
     public function product(): HasMany
     {
-        return $this->hasMany(product::class, 'category_id', 'id');
+        return $this->hasMany(Product::class, 'category_id', 'id');
     }
 }
